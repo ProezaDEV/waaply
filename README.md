@@ -27,6 +27,7 @@ A experiência é dividida em cinco momentos: abertura com o prisma e o posicion
 - Layout responsivo validado de 320 px a 1920 px, sem scroll horizontal
 - Headers de segurança e Content Security Policy prontos para deploy
 - Zero scripts de terceiros, zero cookies, zero rastreamento
+- CI no GitHub Actions protegendo a marca **WAAPLY** e as correções de UX
 
 ---
 
@@ -113,7 +114,9 @@ waaply/
 
 **Navegação.** Os links do cabeçalho e do menu lateral são interceptados por um script inline: em vez de recarregar a página, eles ajustam o estado da seção, rolam até o alvo e atualizam o hash. Isso elimina o intervalo em que o conteúdo aparecia vazio durante a troca de seção.
 
-**Responsividade.** Os painéis de personalização e depoimentos ocupam a altura total do container e centralizam o conteúdo em telas altas, com `align-content: safe center` para nunca cortar o topo quando o conteúdo excede a viewport. Abaixo de 720 px de altura, o painel passa a rolar internamente.
+**Responsividade.** Os painéis de personalização e depoimentos ocupam a altura total do container e centralizam o conteúdo em telas altas, com `align-content: safe center` para nunca cortar o topo quando o conteúdo excede a viewport. Abaixo de 720 px de altura, o painel passa a rolar internamente. Em telas altas de celular, o painel de Personalização foi compactado o suficiente para caber sem rolagem residual.
+
+**Visibilidade dos painéis finais.** Personalização 3D e Clientes WAAPLY compartilham o mesmo container fixo dentro do prisma. Cada painel só fica visível no `data-current_section` correspondente, já inicia oculto e troca sem transição de opacidade — isso evita o flash em que os depoimentos apareciam por um instante ao entrar na Personalização.
 
 **Tratamento de erros.** Os controllers de seção verificam a existência dos elementos antes de manipulá-los, o que mantém o console limpo mesmo com blocos do template original removidos da página.
 
@@ -250,7 +253,35 @@ Capturas feitas em Chromium a 1440x900 (desktop) e 390x620 (mobile), com a cena 
 🟢 Pronto para deploy
 ```
 
-Artefato estático validado em navegador: sem erros de console, sem requisições falhando, sem scroll horizontal nas resoluções testadas e com CSP verificada. Não há suíte de build, lint ou testes neste repositório.
+Artefato estático validado em navegador: sem erros de console, sem requisições falhando, sem scroll horizontal nas resoluções testadas e com CSP verificada. O repositório não tem etapa de build; a qualidade é protegida por um workflow de CI no GitHub Actions que valida a marca **WAAPLY**, os arquivos essenciais e as correções de UX recentes a cada push na `main`.
+
+---
+
+## 🧾 Changelog recente
+
+Melhorias aplicadas após a publicação inicial do artefato, todas sob a marca correta **WAAPLY**:
+
+| Correção | O que mudou |
+| --- | --- |
+| **Marca WAAPLY** | Substituição completa da grafia antiga em HTML, SEO, animações scramble, letreiro SVG, wordmark WebGL (`top/logo.png`), `ogp.jpg`, README e nome do repositório no GitHub. |
+| **Hamburger em fundo escuro** | Em Personalização 3D, Clientes WAAPLY e rodapé o ícone permanece branco e visível; a regra do template que forçava `opacity: 0` em `stellla` foi sobrescrita na origem. |
+| **Flash Clientes → Personalização** | O painel de depoimentos não “pisca” mais ao entrar no prisma. Ambos os painéis começam ocultos (`opacity` + `visibility`) e a troca entre seções é instantânea, sem fade de sobreposição. |
+| **Mobile em telas altas** | Removida a rolagem interna residual do painel de Personalização em viewports altas (ex.: 390×844, 430×932), sem prejudicar telas pequenas onde o scroll interno continua necessário. |
+| **Scroll bidirecional** | Validado topo ↔ final em desktop e mobile (incluindo 430×932), com Personalização 3D e Clientes WAAPLY estáveis nos dois sentidos. |
+| **CI no GitHub Actions** | Workflow `CI — WAAPLY` confere arquivos essenciais, `vercel.json`, ausência da grafia antiga e presença das correções de UX a cada push/PR. |
+
+---
+
+## ⚙️ CI / GitHub Actions
+
+O workflow [`.github/workflows/ci.yml`](./.github/workflows/ci.yml) roda em todo push e pull request na `main` e garante que:
+
+- os arquivos críticos do site e do preview continuam versionados;
+- o `vercel.json` permanece JSON válido;
+- nenhum arquivo de conteúdo volta a usar a grafia antiga da marca;
+- os blocos de correção `WPburgerDark`, `WPnoFlash` e `WPfitCustom` seguem presentes no `index.html`.
+
+Não há build nem deploy automático nesse workflow: o deploy na Vercel continua sendo feito a partir do artefato estático desta branch.
 
 ---
 

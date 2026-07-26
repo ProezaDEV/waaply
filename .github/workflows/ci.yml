@@ -1,0 +1,86 @@
+name: CI — WAAPLY
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validar artefato estático
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Conferir arquivos essenciais
+        run: |
+          set -euo pipefail
+          for f in \
+            index.html \
+            README.md \
+            vercel.json \
+            robots.txt \
+            .gitignore \
+            ogp.jpg \
+            top/logo.png \
+            top/works-title.svg \
+            _astro/index.astro_astro_type_script_index_0_lang.PrismRestore.js \
+            preview/hero.jpg \
+            preview/projetos.jpg \
+            preview/personalizacao.jpg \
+            preview/feedbacks.jpg \
+            preview/mobile.jpg
+          do
+            test -f "$f" || { echo "::error::Arquivo obrigatório ausente: $f"; exit 1; }
+            echo "ok  $f"
+          done
+
+      - name: Validar JSON de deploy (vercel.json)
+        run: python -c "import json; json.load(open('vercel.json', encoding='utf-8')); print('vercel.json OK')"
+
+      - name: Garantir marca WAAPLY (sem grafia antiga)
+        run: |
+          set -euo pipefail
+          # A marca correta é WAAPLY. Qualquer ocorrência de WAAPLAY/waaplay
+          # em arquivos de conteúdo indica regressão da correção de branding.
+          if grep -RIn --exclude-dir=.git --exclude-dir=.github \
+              -e 'WAAPLAY' -e 'waaplay' -e 'Waaplay' \
+              --include='*.html' --include='*.md' --include='*.js' \
+              --include='*.css' --include='*.svg' --include='*.json' \
+              . ; then
+            echo "::error::Encontrada grafia antiga da marca (WAAPLAY). Use WAAPLY."
+            exit 1
+          fi
+          echo "Marca WAAPLY consistente nos arquivos de texto."
+
+      - name: Conferir correções de UX recentes no index.html
+        run: |
+          set -euo pipefail
+          # Hamburger branco/visível na experiência escura (Clientes WAAPLY + rodapé)
+          grep -q 'WPburgerDark' index.html \
+            || { echo "::error::Falta o bloco WPburgerDark (hamburger em fundo escuro)."; exit 1; }
+          # Painéis sem flash ao entrar na Personalização 3D
+          grep -q 'WPnoFlash' index.html \
+            || { echo "::error::Falta o bloco WPnoFlash (flash Clientes/Personalização)."; exit 1; }
+          # Painel de personalização cabe em telas altas sem rolagem residual
+          grep -q 'WPfitCustom' index.html \
+            || { echo "::error::Falta o bloco WPfitCustom (ajuste mobile alto)."; exit 1; }
+          # Wordmark do letreiro WebGL
+          grep -q 'WAAPLY' top/works-title.svg \
+            || { echo "::error::works-title.svg sem WAAPLY."; exit 1; }
+          echo "Correções de UX presentes no artefato."
+
+      - name: Resumo
+        run: |
+          cat <<'EOF'
+          CI WAAPLY — checks aprovados
+          - arquivos essenciais presentes
+          - vercel.json válido
+          - marca WAAPLY sem grafia antiga
+          - correções: hamburger escuro, anti-flash, fit mobile
+          EOF

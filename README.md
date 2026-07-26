@@ -1,5 +1,7 @@
 # WAAPLAY
 
+![Abertura do site WAAPLAY com o prisma em WebGL e o título "Futuro criado nas Camadas."](./preview/hero.jpg)
+
 > Experiência audiovisual em WebGL para uma marca de impressão 3D de figures e colecionáveis geek. A landing page é conduzida pelo scroll: um prisma renderizado em tempo real atravessa a narrativa até se abrir nas telas de personalização e prova social.
 
 ---
@@ -216,9 +218,29 @@ Navegadores além do Chromium e dispositivos físicos: **em validação**.
 
 ## 🖼️ Preview
 
-<!-- Screenshots e GIFs da experiência ainda serão adicionados. -->
+Capturas feitas em Chromium a 1440x900 (desktop) e 390x620 (mobile), com a cena 3D já carregada.
 
-![Imagem de compartilhamento do WAAPLAY](./ogp.jpg)
+### Abertura
+
+![Hero com o prisma em WebGL, título em duas cores e o wordmark rolando ao fundo](./preview/hero.jpg)
+
+### Projetos que fabricamos
+
+![Grade de projetos com foto, categoria, preço e botões para Mercado Livre e Shopee](./preview/projetos.jpg)
+
+### Personalização 3D
+
+![Tela de personalização sob encomenda com os três passos do processo e botão de WhatsApp](./preview/personalizacao.jpg)
+
+### Depoimentos
+
+![Tela de depoimentos com cartões no estilo Instagram, avaliação em estrelas e cidade do cliente](./preview/feedbacks.jpg)
+
+### Mobile
+
+<img src="./preview/mobile.jpg" alt="Abertura do site em viewport de celular, com menu hamburguer e título quebrado em três linhas" width="320">
+
+> A imagem de compartilhamento social (Open Graph) fica em [`ogp.jpg`](./ogp.jpg).
 
 ---
 

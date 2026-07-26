@@ -1,6 +1,6 @@
-# WAAPLAY
+# WAAPLY
 
-![Abertura do site WAAPLAY com o prisma em WebGL e o título "Futuro criado nas Camadas."](./preview/hero.jpg)
+![Abertura do site WAAPLY com o prisma em WebGL e o título "Futuro criado nas Camadas."](./preview/hero.jpg)
 
 > Experiência audiovisual em WebGL para uma marca de impressão 3D de figures e colecionáveis geek. A landing page é conduzida pelo scroll: um prisma renderizado em tempo real atravessa a narrativa até se abrir nas telas de personalização e prova social.
 
@@ -8,7 +8,7 @@
 
 ## ✦ Sobre
 
-WAAPLAY é um estúdio brasileiro de impressão 3D que produz figures, colecionáveis e peças personalizadas. Este repositório contém o site da marca: uma página única que troca a estrutura tradicional de seções empilhadas por uma **narrativa contínua guiada pelo scroll**.
+WAAPLY é um estúdio brasileiro de impressão 3D que produz figures, colecionáveis e peças personalizadas. Este repositório contém o site da marca: uma página única que troca a estrutura tradicional de seções empilhadas por uma **narrativa contínua guiada pelo scroll**.
 
 O objetivo do projeto é comercial e de posicionamento: apresentar o catálogo de peças, explicar o processo de produção e converter o visitante em conversa no WhatsApp, sem depender de um catálogo de e-commerce. A escolha por WebGL não é decorativa — o prisma central funciona como fio condutor entre as etapas da página, dando à marca uma presença digital compatível com o acabamento das peças físicas.
 
@@ -80,7 +80,7 @@ Todas as bibliotecas abaixo foram identificadas dentro do bundle publicado.
 Este repositório contém o **artefato estático já compilado** — não há etapa de build aqui. Os arquivos são servidos exatamente como estão.
 
 ```text
-waaplay/
+waaply/
 ├── index.html                  # Documento único: markup, estilos inline e navegação por âncora
 ├── vercel.json                 # Headers de segurança, CSP e política de cache
 ├── robots.txt                  # Diretiva de indexação
@@ -125,7 +125,7 @@ Não há dependências a instalar: o repositório já contém os arquivos finais
 
 ```bash
 git clone <url-do-repositorio>
-cd waaplay
+cd waaply
 
 # qualquer servidor estático serve; exemplos:
 npx --yes http-server . -p 4321 -c-1
@@ -300,4 +300,4 @@ License: To be defined
 **PROEZADEV** — desenvolvimento do site
 [github.com/ProezaDEV](https://github.com/ProezaDEV)
 
-Marca e produtos: **WAAPLAY**
+Marca e produtos: **WAAPLY**
